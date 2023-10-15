@@ -6,9 +6,12 @@ import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineDelete } from 'react-icons/md';
 import { useState } from 'react';
 import BookModal from './BookModal';
+// import BookEditModal from './BookEditModal';
+
 
 const BookSingleCard = ({ book }) => {
   const [showModal, setShowModal] = useState(false);
+  // const [editModal, setEditModal] = useState(false);
 
   return (
     <div className='border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl gap-y-8'>
@@ -16,9 +19,9 @@ const BookSingleCard = ({ book }) => {
      <div className="my-3">
       <div class="aspect-h-4 aspect-w-1  hidden overflow-hidden rounded-lg sm:block ">
                 <img
-                  src="https://m.media-amazon.com/images/I/61qLFlgZ5gL._AC_UF894,1000_QL80_.jpg"
+                  src={book.imgUrl}
                   alt="Two each of gray, white, and black shirts laying flat."
-                  class="h-full w-full object-cover object-center"
+                  class=" h-full w-full object-cover object-center"
                 />
               </div>
       </div>
@@ -44,7 +47,8 @@ const BookSingleCard = ({ book }) => {
           <BsInfoCircle className='text-2xl text-green-800 hover:text-black' />
         </Link>
         <Link to={`/books/edit/${book._id}`}>
-          <AiOutlineEdit className='text-2xl text-yellow-600 hover:text-black' />
+          <AiOutlineEdit className='text-2xl text-yellow-600 hover:text-black' /> 
+           {/* //onClick={() => setEditModal(true)} */}
         </Link>
         <Link to={`/books/delete/${book._id}`}>
           <MdOutlineDelete className='text-2xl text-red-600 hover:text-black' />
@@ -53,6 +57,9 @@ const BookSingleCard = ({ book }) => {
       {showModal && (
         <BookModal book={book} onClose={() => setShowModal(false)} />
       )}
+      {/* {editModal && (
+        <BookEditModal id={book.id} onClose={() => setEditModal(false)} />
+      )} */}
       </div>
      
      </div>
