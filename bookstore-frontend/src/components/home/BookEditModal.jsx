@@ -19,7 +19,7 @@ const BookEditModal = ({ id, onClose }) => {
   // const {id} = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
+  useEffect(() => { 
     setLoading(true);
     axios.get(`http://localhost:5555/books/${id}`)
     .then((response) => {
