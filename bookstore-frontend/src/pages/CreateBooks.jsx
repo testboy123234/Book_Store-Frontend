@@ -122,7 +122,7 @@ const CreateBooks = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5555/books`, inputs);
+      await axios.post(`https://books-store-api.vercel.app/api/v1/books`, inputs);
       window.location.reload();
     } catch (error) {
       console.log(error);
