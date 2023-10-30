@@ -1,0 +1,102 @@
+
+import React, {useEffect} from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../firebase";
+
+
+const Upload = () => {
+  const [img, setImg] = useState(undefined);
+  const [imgPerc, setImgPerc] = useState(0);
+
+  useEffect(() => {
+    img && uploadFile(img, "imgUrl");
+  }, [img]);
+
+  const uploadFile = (file, fileType) => {
+    const storage = getStorage(app);
+    const folder = fileType === "imgUrl" ? "images/" : "videos/";
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, folder + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        fileType === "imgUrl"
+          ? setImgPerc(Math.round(progress))
+          : setVideoPerc(Math.round(progress));
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            console.log(error);
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("DownloadURL - ", downloadURL);
+          setInputs((prev) => {
+            return {
+              ...prev,
+              [fileType]: downloadURL,
+            };
+          });
+        });
+      }
+    );
+  };
+
+  const Upload = () => {
+    return (
+      <div className=" flex h-screen items-center justify-center">
+        <form action="" method="post" className=" grid-flow-row">
+          {/* <input type="file" name="" id="img" /> */}
+          <div className=""></div>
+
+          <div className="">
+            <input
+              type="file"
+              onChange={(e) => setImg((prev) => e.target.files[0])}
+            />
+          </div>
+          <button type="submit" className=" mt-11 bg-red-300 p-3 rounded-lg">
+            image Upload !
+          </button>
+        </form>
+      </div>
+    );
+  };
+};
+export default Upload;
+
+
