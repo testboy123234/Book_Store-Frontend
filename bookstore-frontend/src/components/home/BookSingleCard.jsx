@@ -16,7 +16,7 @@ const BookSingleCard = ({ book }) => {
      <div className="my-3">
       <div class="aspect-h-4 aspect-w-1  hidden overflow-hidden rounded-lg sm:block ">
                 <img
-                  src="https://m.media-amazon.com/images/I/61qLFlgZ5gL._AC_UF894,1000_QL80_.jpg"
+                  src={book.imgUrl}
                   alt="Two each of gray, white, and black shirts laying flat."
                   class="h-full w-full object-cover object-center"
                 />
@@ -35,7 +35,7 @@ const BookSingleCard = ({ book }) => {
         <BiUserCircle className='text-red-300 text-2xl' />
         <h2 className='my-1'>{book.author}</h2>
       </div>
-      <div className='flex justify-between items-center gap-x-2 mt-4 p-4'>
+      {/* <div className='flex justify-between items-center gap-x-2 mt-4 p-4'>
         <BiShow
           className='text-3xl text-blue-800 hover:text-black cursor-pointer'
           onClick={() => setShowModal(true)}
@@ -49,7 +49,7 @@ const BookSingleCard = ({ book }) => {
         <Link to={`/books/delete/${book._id}`}>
           <MdOutlineDelete className='text-2xl text-red-600 hover:text-black' />
         </Link>
-      </div>
+      </div> */}
       {showModal && (
         <BookModal book={book} onClose={() => setShowModal(false)} />
       )}
