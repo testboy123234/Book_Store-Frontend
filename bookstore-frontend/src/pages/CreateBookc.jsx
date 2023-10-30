@@ -67,7 +67,7 @@ const CreateBookc = () => {
   const submitForm = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5555/books", bookData, {
+      await axios.post("https://books-store-api.vercel.app/api/v1/books", bookData, {
         headers: {
           'Content-Type': 'application/json',
         },
