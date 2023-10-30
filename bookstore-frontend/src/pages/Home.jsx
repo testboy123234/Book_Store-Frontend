@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/books")
+      .get("https://books-store-api.vercel.app/api/v1/books")
       .then((response) => {
         setBooks(response.data.data);
         setLoading(false);
@@ -52,6 +52,11 @@ const Home = () => {
               </button>
               <div className="flex justify-between items-center">
               <Link to="/books/create">
+                <MdOutlineAddBox className="text-sky-800 text-4xl" />
+              </Link>
+            </div>
+              <div className="flex justify-between items-center bg-red-800">
+              <Link to="/books/createc">
                 <MdOutlineAddBox className="text-sky-800 text-4xl" />
               </Link>
             </div>
